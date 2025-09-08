@@ -1,8 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fillo Admin System
+
+Fillo 스포츠 팬덤 모임 플랫폼의 관리자 시스템입니다.
+
+## 인증 시스템
+
+### 로그인 API
+
+- **Endpoint**: `POST http://localhost:8094/api/v1/admin/login`
+- **Request Body**:
+  ```json
+  {
+    "loginId": "관리자 아이디",
+    "password": "비밀번호"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "statusMessage": "정상 수행",
+    "statusCode": "FO-200",
+    "data": {}
+  }
+  ```
+- **Response Headers**: `Authorization`, `RefreshToken` (JWT 토큰)
+
+### 자동 토큰 관리
+
+- 로그인 성공 시 JWT 토큰을 자동으로 저장
+- 이후 모든 API 요청에 자동으로 토큰 헤더 추가
+- 토큰은 localStorage와 메모리에 동시 저장
+
+### 에러 처리
+
+- 로그인 실패 시 에러 페이지로 자동 리다이렉트
+- `statusCode`가 `FO-200`이 아닌 경우 에러 처리
+- 토큰이 없는 경우 에러 처리
 
 ## Getting Started
 
-First, run the development server:
+백엔드 서버가 `http://localhost:8094`에서 실행 중이어야 합니다.
 
 ```bash
 npm run dev

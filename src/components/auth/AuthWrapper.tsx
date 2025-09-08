@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import LoginPage from "./LoginPage";
 
@@ -8,14 +9,21 @@ interface AuthWrapperProps {
   children: React.ReactNode;
 }
 
+// 인증이 필요하지 않은 페이지 경로들
+const PUBLIC_ROUTES = ["/error"];
+
 const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
+  const pathname = usePathname();
 
   useEffect(() => {
     // 인증 상태 확인 후 로딩 상태 해제
     setIsLoading(false);
   }, [isAuthenticated]);
+
+  // 현재 경로가 공개 라우트인지 확인
+  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
   // 로딩 중에는 로딩 스피너 표시
   if (isLoading) {
@@ -29,6 +37,11 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
         </div>
       </div>
     );
+  }
+
+  // 공개 라우트인 경우 인증 없이 접근 허용
+  if (isPublicRoute) {
+    return <>{children}</>;
   }
 
   // 인증되지 않은 경우 로그인 페이지 표시

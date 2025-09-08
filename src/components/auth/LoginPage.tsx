@@ -9,15 +9,25 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
-  const { login } = useAuth();
+  const [errorMessage, setErrorMessage] = useState("");
+  const { login, isLoading } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const isValid = login(username, password);
-    if (!isValid) {
+    try {
+      const isValid = await login(username, password);
+      if (!isValid) {
+        setErrorMessage(
+          "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요."
+        );
+        setShowError(true);
+        // 3초 후 에러 메시지 자동 숨김
+        setTimeout(() => setShowError(false), 3000);
+      }
+    } catch (error) {
+      setErrorMessage("서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.");
       setShowError(true);
-      // 3초 후 에러 메시지 자동 숨김
       setTimeout(() => setShowError(false), 3000);
     }
   };
@@ -40,9 +50,7 @@ const LoginPage: React.FC = () => {
                 로그인 실패
               </h3>
             </div>
-            <p className="text-gray-600 mb-6">
-              존재하지 않는 관리자 계정입니다
-            </p>
+            <p className="text-gray-600 mb-6">{errorMessage}</p>
             <button
               onClick={handleCloseError}
               className="w-full bg-red-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-700 transition-colors duration-200"
@@ -124,10 +132,20 @@ const LoginPage: React.FC = () => {
             {/* 로그인 버튼 */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 flex items-center justify-center space-x-2"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <LogIn className="w-5 h-5" />
-              <span>로그인</span>
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>로그인 중...</span>
+                </>
+              ) : (
+                <>
+                  <LogIn className="w-5 h-5" />
+                  <span>로그인</span>
+                </>
+              )}
             </button>
           </form>
 

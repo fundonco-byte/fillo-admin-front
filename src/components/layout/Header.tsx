@@ -14,9 +14,14 @@ const Header: React.FC<HeaderProps> = ({ title, onMenuToggle }) => {
   const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleLogout = () => {
-    logout();
-    setShowLogoutDropdown(false);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setShowLogoutDropdown(false);
+    } catch (error) {
+      console.error("로그아웃 처리 중 오류:", error);
+      setShowLogoutDropdown(false);
+    }
   };
 
   // 외부 클릭 시 드롭다운 닫기
