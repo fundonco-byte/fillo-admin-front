@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -p 6000",
-    "build": "cross-env NEXT_TELEMETRY_DISABLED=1 next build",
+    "build": "next build",
     "build:clean": "npm run clean && npm run build",
-    "start": "node .next/standalone/server.js",
+    "start": "NODE_ENV=production node .next/standalone/server.js -p $PORT",
     "lint": "next lint",
     "clean": "rimraf build .next"
   },
