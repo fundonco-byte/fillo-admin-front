@@ -862,7 +862,7 @@ const CustomerManagement: React.FC = () => {
             <p className="text-lg font-medium mb-2">{loadError}</p>
 
             {/* 디버깅 정보 */}
-            <div className="bg-gray-50 rounded-lg p-4 mb-4 text-left">
+            {/* <div className="bg-gray-50 rounded-lg p-4 mb-4 text-left">
               <h4 className="text-sm font-medium text-gray-900 mb-2">
                 디버깅 정보:
               </h4>
@@ -875,7 +875,7 @@ const CustomerManagement: React.FC = () => {
                   • 브라우저 개발자 도구 → 네트워크 탭에서 자세한 오류 확인 가능
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex justify-center space-x-3">
               <button

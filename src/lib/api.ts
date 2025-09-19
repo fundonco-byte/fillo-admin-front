@@ -2,7 +2,7 @@
 
 import { LoginRequest, ApiResponse, AuthTokens } from "@/types/auth";
 
-const API_BASE_URL = "http://localhost:8094";
+const API_BASE_URL = "http://1.234.75.29:8094";
 
 // 토큰 저장소
 let authTokens: AuthTokens = {};
