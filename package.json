@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 6000",
+    "dev": "next dev -p 4000",
     "build": "next build",
     "build:clean": "npm run clean && npm run build",
     "start": "NODE_ENV=production node .next/standalone/server.js -p $PORT",
