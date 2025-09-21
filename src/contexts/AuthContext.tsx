@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // 초기 로딩 상태를 true로 설정
   const router = useRouter();
 
   useEffect(() => {
@@ -40,6 +40,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         // 저장된 토큰도 로드
         loadAuthTokens();
       }
+      // 초기화 완료 후 로딩 상태 해제
+      setIsLoading(false);
     }
   }, []);
 
@@ -168,6 +170,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
+
+  // 서버사이드 렌더링 중인 경우 기본값 반환
+  if (typeof window === "undefined") {
+    return {
+      isAuthenticated: false,
+      login: async () => false,
+      logout: async () => {},
+      isLoading: false,
+      tokenExpiredAfterProcess: async () => {},
+    };
+  }
+
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
   }

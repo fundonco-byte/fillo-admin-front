@@ -4,6 +4,9 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import AuthWrapper from "@/components/auth/AuthWrapper";
 
+// 동적 렌더링 강제 (정적 생성 방지)
+export const dynamic = "force-dynamic";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],

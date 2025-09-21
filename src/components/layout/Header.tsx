@@ -10,9 +10,12 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title, onMenuToggle }) => {
-  const { logout } = useAuth();
+  const auth = useAuth();
   const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // 서버사이드 렌더링 중에는 logout 함수를 안전하게 처리
+  const logout = auth?.logout || (async () => {});
 
   const handleLogout = async () => {
     try {
