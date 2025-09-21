@@ -1,5 +1,5 @@
 import EventManagement from "@/components/events/EventManagement";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 
 export default function EventsPage() {
   return (

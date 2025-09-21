@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import AnswerForm from "@/components/inquiries/AnswerForm";
 
 interface Inquiry {

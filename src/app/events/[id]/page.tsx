@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import { ChevronLeft, Eye, EyeOff, Calendar, FileText } from "lucide-react";
 
 export default function EventDetailPage() {

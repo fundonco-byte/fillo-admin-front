@@ -1,6 +1,6 @@
 "use client";
 
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import StatCard from "@/components/dashboard/StatCard";
 import WeeklyChart from "@/components/dashboard/WeeklyChart";
 import RecentTransactions from "@/components/dashboard/RecentTransactions";

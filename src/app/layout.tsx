@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
-import AuthWrapper from "@/components/auth/AuthWrapper";
-
-// 동적 렌더링 강제 (정적 생성 방지)
-export const dynamic = "force-dynamic";
+import ClientAuthProvider from "@/components/providers/ClientAuthProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -42,9 +38,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <AuthWrapper>{children}</AuthWrapper>
-        </AuthProvider>
+        <ClientAuthProvider>{children}</ClientAuthProvider>
       </body>
     </html>
   );

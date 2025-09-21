@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import { Plus, Edit, Trash2, Search, Upload, X } from "lucide-react";
 import { clsx } from "clsx";
 import Image from "next/image";

@@ -1,6 +1,6 @@
 "use client";
 
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import CustomerManagement from "@/components/customers/CustomerManagement";
 
 const CustomersPage: React.FC = () => {

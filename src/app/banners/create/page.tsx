@@ -1,6 +1,6 @@
 "use client";
 
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import BannerForm from "@/components/banners/BannerForm";
 
 const CreateBannerPage: React.FC = () => {

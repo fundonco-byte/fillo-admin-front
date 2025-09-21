@@ -12,7 +12,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 
 // FAQ 데이터 타입 정의
 interface FAQ {

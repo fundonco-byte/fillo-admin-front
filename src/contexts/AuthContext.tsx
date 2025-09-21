@@ -177,7 +177,7 @@ export const useAuth = () => {
       isAuthenticated: false,
       login: async () => false,
       logout: async () => {},
-      isLoading: false,
+      isLoading: true, // SSR 중에는 로딩 상태로 설정
       tokenExpiredAfterProcess: async () => {},
     };
   }

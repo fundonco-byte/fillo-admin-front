@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import ProductEditClient from "./ProductEditClient";
 
 interface EditProductPageProps {

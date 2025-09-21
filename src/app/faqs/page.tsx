@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Plus, Search, Edit, Trash2, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 
 // FAQ 데이터 타입 정의
 interface FAQ {
@@ -109,185 +109,190 @@ export default function FAQManagementPage() {
       <div>
         {/* 헤더 */}
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-2">FAQ 관리</h1>
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+            FAQ 관리
+          </h1>
           <p className="text-gray-600">
             자주 묻는 질문을 관리하고 고객 지원을 개선하세요
           </p>
         </div>
 
-      {/* 검색 및 필터 섹션 */}
-      <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-        <div className="flex flex-col md:flex-row gap-4 mb-4">
-          <div className="flex-1">
-            <Input
-              type="text"
-              placeholder="FAQ 제목으로 검색..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full"
-            />
+        {/* 검색 및 필터 섹션 */}
+        <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <Input
+                type="text"
+                placeholder="FAQ 제목으로 검색..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full"
+              />
+            </div>
+            <div className="w-48">
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">모든 유형</option>
+                <option value="제품">제품</option>
+                <option value="서비스">서비스</option>
+              </select>
+            </div>
+            <Link href="/faqs/create">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
+                <Plus size={16} />
+                FAQ 생성
+              </Button>
+            </Link>
           </div>
-          <div className="w-48">
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">모든 유형</option>
-              <option value="제품">제품</option>
-              <option value="서비스">서비스</option>
-            </select>
-          </div>
-          <Link href="/faqs/create">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
-              <Plus size={16} />
-              FAQ 생성
-            </Button>
-          </Link>
         </div>
-      </div>
 
-      {/* FAQ 테이블 */}
-      <div className="bg-white rounded-lg shadow-sm border">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b">
-              <tr>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
-                  FAQ ID
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
-                  FAQ 질문 제목
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
-                  FAQ 등록 일자
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
-                  FAQ 유형
-                </th>
-                <th className="px-6 py-4 text-center text-sm font-medium text-gray-600">
-                  관리
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {paginatedFAQs.map((faq) => (
-                <tr key={faq.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {faq.id.toString().padStart(2, "0")}.
-                  </td>
-                  <td className="px-6 py-4">
-                    <Link
-                      href={`/faqs/${faq.id}`}
-                      className="text-sm text-gray-900 hover:text-blue-600 cursor-pointer"
-                    >
-                      {faq.title}
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {faq.createdAt}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    {faq.category}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-center gap-2">
-                      <Link href={`/faqs/${faq.id}`}>
-                        <Button variant="outline" size="sm" className="p-2">
-                          <Eye size={16} />
-                        </Button>
-                      </Link>
-                      <Link href={`/faqs/edit/${faq.id}`}>
-                        <Button variant="outline" size="sm" className="p-2">
-                          <Edit size={16} />
-                        </Button>
-                      </Link>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="p-2 text-red-600 hover:text-red-700"
-                        onClick={() => setDeleteConfirm(faq.id)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </td>
+        {/* FAQ 테이블 */}
+        <div className="bg-white rounded-lg shadow-sm border">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                    FAQ ID
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                    FAQ 질문 제목
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                    FAQ 등록 일자
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-600">
+                    FAQ 유형
+                  </th>
+                  <th className="px-6 py-4 text-center text-sm font-medium text-gray-600">
+                    관리
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {paginatedFAQs.map((faq) => (
+                  <tr key={faq.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {faq.id.toString().padStart(2, "0")}.
+                    </td>
+                    <td className="px-6 py-4">
+                      <Link
+                        href={`/faqs/${faq.id}`}
+                        className="text-sm text-gray-900 hover:text-blue-600 cursor-pointer"
+                      >
+                        {faq.title}
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {faq.createdAt}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {faq.category}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-center gap-2">
+                        <Link href={`/faqs/${faq.id}`}>
+                          <Button variant="outline" size="sm" className="p-2">
+                            <Eye size={16} />
+                          </Button>
+                        </Link>
+                        <Link href={`/faqs/edit/${faq.id}`}>
+                          <Button variant="outline" size="sm" className="p-2">
+                            <Edit size={16} />
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="p-2 text-red-600 hover:text-red-700"
+                          onClick={() => setDeleteConfirm(faq.id)}
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 페이지네이션 */}
+          {totalPages > 1 && (
+            <div className="px-6 py-4 border-t">
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-gray-600">
+                  총 {filteredFAQs.length}개의 FAQ 중{" "}
+                  {(currentPage - 1) * itemsPerPage + 1}-
+                  {Math.min(currentPage * itemsPerPage, filteredFAQs.length)}개
+                  표시
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    이전
+                  </Button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => handlePageChange(page)}
+                        className="w-8"
+                      >
+                        {page}
+                      </Button>
+                    )
+                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  >
+                    다음
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* 페이지네이션 */}
-        {totalPages > 1 && (
-          <div className="px-6 py-4 border-t">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                총 {filteredFAQs.length}개의 FAQ 중{" "}
-                {(currentPage - 1) * itemsPerPage + 1}-
-                {Math.min(currentPage * itemsPerPage, filteredFAQs.length)}개
-                표시
-              </div>
-              <div className="flex gap-2">
+        {/* 삭제 확인 모달 */}
+        {deleteConfirm && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                FAQ 삭제 확인
+              </h3>
+              <p className="text-gray-600 mb-6">
+                이 FAQ를 삭제하시겠습니까? 삭제된 FAQ는 복구할 수 없습니다.
+              </p>
+              <div className="flex gap-3 justify-end">
                 <Button
                   variant="outline"
-                  size="sm"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
+                  onClick={() => setDeleteConfirm(null)}
                 >
-                  이전
+                  취소
                 </Button>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (page) => (
-                    <Button
-                      key={page}
-                      variant={currentPage === page ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => handlePageChange(page)}
-                      className="w-8"
-                    >
-                      {page}
-                    </Button>
-                  )
-                )}
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
+                  variant="destructive"
+                  onClick={() => handleDelete(deleteConfirm)}
                 >
-                  다음
+                  삭제
                 </Button>
               </div>
             </div>
           </div>
         )}
-      </div>
-
-      {/* 삭제 확인 모달 */}
-      {deleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              FAQ 삭제 확인
-            </h3>
-            <p className="text-gray-600 mb-6">
-              이 FAQ를 삭제하시겠습니까? 삭제된 FAQ는 복구할 수 없습니다.
-            </p>
-            <div className="flex gap-3 justify-end">
-              <Button variant="outline" onClick={() => setDeleteConfirm(null)}>
-                취소
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => handleDelete(deleteConfirm)}
-              >
-                삭제
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
       </div>
     </Layout>
   );

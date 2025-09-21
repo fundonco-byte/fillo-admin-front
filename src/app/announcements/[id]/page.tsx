@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import AnnouncementDetail from "@/components/announcements/AnnouncementDetail";
 
 const AnnouncementDetailPage = () => {

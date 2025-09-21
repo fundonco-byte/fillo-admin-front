@@ -1,6 +1,6 @@
 "use client";
 
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/layout/DynamicLayout";
 import { ReviewManagement } from "@/components/reviews/ReviewManagement";
 
 export default function ReviewsPage() {
